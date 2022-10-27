@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,12 +27,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         try {
-            \DB::connection()->getPDO();
-            dump('Database connected: ' . \DB::connection()->getDatabaseName());
-        }
-         
-        catch (\Exception $e) {
-            dump('Database connected: ' . 'None');
+            DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            die("Could not connect to the database.  Please check your configuration. error:" . $e);
         }
     }
 }
